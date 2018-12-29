@@ -14,13 +14,13 @@ module Spree
       end
 
       def testmail
-        if TestMailer.test_email(try_spree_current_user.email).deliver_now
+        if TestMailer.test_email("myknotto@gmail.com").deliver_now
           flash[:success] = Spree.t('mail_methods.testmail.delivery_success')
         else
           flash[:error] = Spree.t('mail_methods.testmail.delivery_error')
         end
       rescue => e
-        flash[:error] = Spree.t('mail_methods.testmail.error', e: e)
+        flash[:error] = Spree.t('mail_methods.testmail.error', e: e) + try_spree_current_user.email
       ensure
         redirect_to edit_admin_mail_method_url
       end
